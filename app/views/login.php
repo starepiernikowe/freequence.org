@@ -1,21 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - <?php echo SITE_NAME; ?></title>
-    <style>
-        body { font-family: sans-serif; }
-        .error { color: red; }
-    </style>
-</head>
-<body>
+<?php ob_start(); ?>
+<div class="form-container">
     <h1>Login</h1>
 
-    <?php if (!empty($errors)): ?>
+    <?php if (!empty($view_data['errors'])): ?>
         <div class="error">
             <ul>
-                <?php foreach ($errors as $error): ?>
+                <?php foreach ($view_data['errors'] as $error): ?>
                     <li><?php echo $error; ?></li>
                 <?php endforeach; ?>
             </ul>
@@ -35,7 +25,6 @@
             <button type="submit">Login</button>
         </div>
     </form>
-        <a href="/register">Register</a>
-
-</body>
-</html>
+</div>
+<?php $content = ob_get_clean(); ?>
+<?php include 'layout.php'; ?>

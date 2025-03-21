@@ -1,0 +1,214 @@
+/* General Styles */
+*, *::before, *::after { /* Apply to all elements */
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: #1e1e1e; /* Dark background */
+    color: #d4d4d4; /* Light text */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%; /* Full width */
+    border: 2px solid #444; /* Main border */
+    background-color: #282828;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    display: flex;         /* Add flexbox to container */
+    flex-direction: column; /* Stack children vertically */
+    min-height: 100vh; /* Full viewport height */
+}
+
+.top-bar {
+    background-color: #333; /* Top border color */
+    padding: 15px 20px;
+    border-bottom: 4px solid #555; /* Wider top border */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;       /* Prevent shrinking */
+}
+.site-title{
+    font-size: 1.5em;
+    color: #eee;
+    margin-right: auto; /* Push the title to the left, give it space */
+
+}
+.bottom-bar {
+    background-color: #333; /* Bottom border color */
+    padding: 10px 20px;
+    border-top: 2px solid #555; /* Narrower bottom border */
+    flex-shrink: 0;       /* Prevent shrinking */
+}
+
+.main-content {
+    padding: 20px;
+    flex-grow: 1;       /* Allow content to grow to fill space */
+    overflow-y: auto;    /* Add scrollbar if content overflows */
+}
+/* Hamburger Menu */
+.hamburger-menu {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 22px;
+    flex-shrink: 0; /* Prevent hamburger menu from shrinking */
+}
+
+.hamburger-menu div {
+    width: 100%;
+    height: 4px;
+    background-color: #d4d4d4;
+    border-radius: 2px;
+}
+/* Nav Menu Styles */
+.nav-menu {
+    position: fixed;
+    top: 0;
+    right: -300px; /* Initially hidden */
+    width: 250px;
+    height: 100%;
+    background-color: #333;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: right 0.3s ease-in-out;
+    z-index: 100; /* Ensure it's on top */
+    overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+.nav-menu.open {
+    right: 0;
+}
+
+.nav-close-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+    color: #d4d4d4;
+    cursor: pointer;
+}
+
+.nav-content {
+    padding: 50px 20px 20px; /* Add some top padding to account for close button */
+    display: flex;
+    flex-direction: column;
+
+}
+
+.nav-content a{
+   color: #d4d4d4;
+    text-decoration: none;
+    padding: 10px 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #444;
+    transition: background-color: 0.2s;
+    display: block; /* Make the links block-level for easier styling/clicking */
+
+}
+.nav-content a:hover {
+    background-color: #444;
+}
+
+/* Form Styles */
+.form-container {
+    background-color: #3a3a3a; /* Creamy dark */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    margin: 0 auto;
+    max-width: 500px; /* Adjust as needed */
+    text-align: center; /*Center content*/
+
+}
+
+.form-container h1 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #eee
+}
+
+.form-container input[type="text"],
+.form-container input[type="email"],
+.form-container input[type="password"],
+.form-container textarea,
+.form-container select
+ {
+    width: 100%; /* Full width within the container */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #555;
+    background-color: #282828;
+    color: #d4d4d4;
+    border-radius: 4px;
+     /* Remove explicit width and let box-sizing handle it */
+}
+/* Override browser autofill styles */
+.form-container input:-webkit-autofill,
+.form-container input:-webkit-autofill:hover,
+.form-container input:-webkit-autofill:focus,
+.form-container textarea:-webkit-autofill,
+.form-container textarea:-webkit-autofill:hover,
+.form-container textarea:-webkit-autofill:focus,
+.form-container select:-webkit-autofill,
+.form-container select:-webkit-autofill:hover,
+.form-container select:-webkit-autofill:focus {
+    -webkit-text-fill-color: #d4d4d4; /* Your desired text color */
+    -webkit-box-shadow: 0 0 0px 1000px #282828 inset; /* Your desired background color */
+    transition: background-color 5000s ease-in-out 0s; /* Delay the transition */
+}
+.form-container input[type="text"]::placeholder,
+.form-container input[type="email"]::placeholder,
+.form-container input[type="password"]::placeholder,
+.form-container textarea::placeholder,
+.form-container select::placeholder{
+    color: #777;
+}
+
+.form-container button[type="submit"] {
+    background-color: #4CAF50; /* Example button color - adjust as you like */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color: 0.3s;
+}
+
+.form-container button[type="submit"]:hover {
+    background-color: #367c39;
+}
+.error {
+    color: #ff6347;
+    margin-bottom: 15px;
+    text-align: center;
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .nav-menu{
+        width: 100%;
+        right: -100%;
+    }
+    .form-container{
+        max-width: 90%;
+    }
+    .top-bar{
+        padding: 15px 10px; /* Reduce padding on smaller screens */
+
+    }
+   /* .hamburger-menu{  <- Removed margin-top
+        margin-top: 10px;
+    }*/
+    .site-title{
+        font-size: 1.2em;
+         margin-right: 0; /* Reset margin on smaller screens */
+
+    }
+}

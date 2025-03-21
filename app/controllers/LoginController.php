@@ -3,7 +3,7 @@ require_once BASE_PATH . 'app/models/User.php';
 
 class LoginController {
 
-    public function index() {
+   public function index($view_data = []) { // Accept $view_data
         // Redirect to home if already logged in
         if (isset($_SESSION['user_id'])) {
             redirect('home');
@@ -11,8 +11,8 @@ class LoginController {
         require_once BASE_PATH . 'app/views/login.php';
     }
 
-   public function login()
-    {
+   public function login($view_data = []) { // Accept $view_data
+
         // Redirect to home if already logged in.
         if (isset($_SESSION['user_id'])) {
             redirect('home');
@@ -46,6 +46,7 @@ class LoginController {
                     $errors[] = 'Invalid username or password.';
                 }
             }
+            $view_data['errors'] = $errors; //Pass errors to the view.
             // Re-display the login form with error messages
             require_once BASE_PATH . 'app/views/login.php';
         } else {
@@ -53,7 +54,7 @@ class LoginController {
         }
     }
 
-     public function logout() {
+     public function logout($view_data = []) { // Accept $view_data
         // Unset all session variables
         $_SESSION = array();
 

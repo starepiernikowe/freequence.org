@@ -3,7 +3,7 @@ require_once BASE_PATH . 'app/models/User.php';
 
 class RegisterController {
 
-    public function index() {
+  public function index($view_data = []) { // Accept $view_data
         // Redirect to home if already logged in
         if (isset($_SESSION['user_id'])) {
             redirect('home');
@@ -11,7 +11,7 @@ class RegisterController {
         require_once BASE_PATH . 'app/views/register.php';
     }
 
-    public function register() {
+    public function register($view_data = []) { // Accept $view_data
         // Redirect to home if already logged in
          if (isset($_SESSION['user_id'])) {
             redirect('home');
@@ -57,6 +57,7 @@ class RegisterController {
                     }
                 }
             }
+            $view_data['errors'] = $errors; //Pass errors to the view.
 
             // If there are errors, re-display the registration form with error messages
             require_once BASE_PATH . 'app/views/register.php';
