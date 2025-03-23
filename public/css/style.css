@@ -150,6 +150,10 @@ body {
     border-radius: 4px;
      /* Remove explicit width and let box-sizing handle it */
 }
+.form-container textarea{ /*limit the resize*/
+    resize: vertical;
+    min-height: 80px; /* Or whatever minimum height you prefer */
+}
 /* Override browser autofill styles */
 .form-container input:-webkit-autofill,
 .form-container input:-webkit-autofill:hover,
@@ -190,6 +194,67 @@ body {
     margin-bottom: 15px;
     text-align: center;
 }
+/* Dynamic input Styles */
+.form-container .dynamic-input { /* Style for dynamically added inputs */
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #555;
+    background-color: #282828;
+    color: #d4d4d4;
+    border-radius: 4px;
+}
+
+/* Remove number input arrows - Unified */
+.form-container input[type="number"],
+.form-container .dynamic-input[type="number"]
+ {
+  -moz-appearance: textfield; /* Firefox */
+}
+
+.form-container input[type="number"]::-webkit-inner-spin-button,
+.form-container input[type="number"]::-webkit-outer-spin-button,
+.form-container .dynamic-input[type="number"]::-webkit-inner-spin-button,
+.form-container .dynamic-input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Checkbox Styling (Unified) */
+.form-container input[type="checkbox"],
+.form-container .dynamic-input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #555;
+    background-color: #282828;
+    border-radius: 3px;
+    cursor: pointer;
+    outline: none;
+}
+
+.form-container input[type="checkbox"]:checked,
+.form-container .dynamic-input[type="checkbox"]:checked {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
+
+.form-container input[type="checkbox"]:checked::before,
+.form-container .dynamic-input[type="checkbox"]:checked::before {
+    content: '\2713'; /* Unicode checkmark */
+    display: block;
+    text-align: center;
+    color: #fff;
+    font-size: 12px;
+}
+
+.form-container input[type="checkbox"]:focus,
+.form-container .dynamic-input[type="checkbox"]:focus {
+    box-shadow: 0 0 3px 2px #68a26b;
+    border-color: #4CAF50;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .nav-menu{

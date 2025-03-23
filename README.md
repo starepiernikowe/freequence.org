@@ -6,8 +6,7 @@
 
 freequence.org is a web application designed to help radio users (and users of other devices utilizing radio waves) coordinate frequencies and avoid interference. The platform aims to be:
 
-*   **International:** Supporting both English (default) and Polish languages.
-*   **Flexible:** Allowing registration of various device types (DMR446, PMR446, CB, SDR, Repeaters, and custom setups).
+*   **Flexible:** Allowing registration of various device types (DMR, DMR446, PMR446, CB, SDR, Repeaters, and custom setups).
 *   **Scalable:** Built to accommodate future growth (new features, more users).
 *   **User-Friendly:** Easy to navigate, with an intuitive and clear interface.
 *   **Community-Driven:** Featuring a forum for users to share experiences, ask questions, and connect.
@@ -22,19 +21,18 @@ freequence.org is a web application designed to help radio users (and users of o
     *   Display basic user information.
     *   List of registered devices.
 *   **Device Registration:**
-    *   Support for multiple device types (DMR446, PMR446, and a customizable "VAR" type).
-    *   Predefined templates for DMR446 and PMR446.
-    *   Fully customizable "VAR" template for user-defined device types.
+    *   Support for unlimited device types and configuration.
+    *   Predefined System and User templates.
     *   Grouping of entries (e.g., by location).
     *   Subgroups within groups (e.g., for different teams).
-    *   Interactive map integration (Google Maps) for location selection.
+    *   Interactive map integration (OpenLayers) for location selection.
     *   Status settings (active, inactive, reserved).
     *   Availability scheduling.
     *   "Call sign/alias" field.
 *   **Search & Filtering:** Find entries by location (on a map), device type, parameters, and status.
-*   **Interactive Map:** Visualize registered devices on a map (using Google Maps).
+*   **Interactive Map:** Visualize registered devices on a map (using OpenLayers).
 *   **Forum:** Integrated forum for user discussions (categories to be determined).
-*   **Documentation:** Resources on DMR446 and PMR446 standards, device configuration guides, and usage examples (future consideration).
+*   **Documentation:** Standards, device configuration guides, and usage examples (future consideration).
 *   **DMR Network Wizard (Future):** Automatic generation of DMR network configurations.
 *   **Android App (Future):**  Potential for real-time location tracking and data entry.
 
@@ -44,7 +42,7 @@ freequence.org is a web application designed to help radio users (and users of o
 *   **Backend:** PHP
 *   **Database:** MySQL
 *   **Web Server:** Apache with SSL (using `.htaccess` for request rewriting)
-*   **External APIs:** Google Maps
+*   **External APIs:** OpenLayers
 
 ## Getting Started
 

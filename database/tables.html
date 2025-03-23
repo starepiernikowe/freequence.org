@@ -1,152 +1,214 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Database Structure</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px; /* Add some space below the table */
-        }
-        th, td {
-            border: 1px solid #add8e6;
-            padding: 8px;
-            text-align: left;
-        }
-        thead {
-            background-color: #f0f8ff;
-        }
-        ul {
-            list-style: disc;
-            margin-left: 20px;
-        }
-        /* Style for code elements within the table */
-        td code {
-          font-family: monospace;
-          background-color: #f4f4f4;
-          padding: 2px 4px;
-          border: 1px solid #ddd;
-          border-radius: 3px;
-        }
-    </style>
+<title>Database Schema</title>
+<style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+  .code {
+    font-family: monospace;
+    white-space: pre-wrap;
+    background-color: #eee;
+    padding: 4px;
+  }
+  .comment {
+    color: #999; /* Gray color for comments */
+    font-style: italic;
+  }
+    .keyword {
+        color: blue; /* Or any color you prefer for SQL keywords */
+        font-weight: bold;
+    }
+    .datatype {
+        color: green;
+    }
+    .tablename {
+      color: darkred;
+      font-weight: bold;
+    }
+    .string {
+        color: brown;
+    }
+</style>
 </head>
 <body>
 
-    <table >
-        <thead >
-            <tr>
-                <th >Table Name</th>
-                <th >Columns</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td ><code>users</code></td>
-                <td >
-                    <ul>
-                        <li><code>id</code> (INT, AUTO_INCREMENT, PRIMARY KEY)</li>
-                        <li><code>username</code> (VARCHAR(255), NOT NULL, UNIQUE)</li>
-                        <li><code>email</code> (VARCHAR(255), NOT NULL, UNIQUE)</li>
-                        <li><code>password</code> (VARCHAR(255), NOT NULL)</li>
-                        <li><code>registration_date</code> (DATETIME, NOT NULL)</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td ><code>templates</code></td>
-                <td >
-                    <ul>
-                        <li><code>id</code> (INT, AUTO_INCREMENT, PRIMARY KEY)</li>
-                        <li><code>name</code> (VARCHAR(255)) – "DMR446", "PMR446", "CB Radio", "SDR", "Repeater", etc.</li>
-                        <li><code>description</code> (TEXT) – <em>optional</em> description of the template.</li>
-                        <li><code>is_system</code> (TINYINT) – flag indicating whether the template is a system template (0 = no, 1 = yes; for DMR446 and PMR446).</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td >
-                  <code>callsigns</code>
-                </td>
-                <td >
-                  <ul>
-                    <li><code>id</code> (INT, AUTO_INCREMENT, PRIMARY KEY)</li>
-                    <li><code>user_id</code> (INT, FOREIGN KEY referencing <code>users</code>.<code>id</code>)</li>
-                    <li><code>callsign_id</code> (VARCHAR(255), UNIQUE)</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td ><code>entry_groups</code></td>
-                <td >
-                    <ul>
-                        <li><code>id</code> (INT, AUTO_INCREMENT, PRIMARY KEY)</li>
-                        <li><code>user_id</code> (INT, FOREIGN KEY to <code>users</code>.<code>id</code>)</li>
-                        <li><code>group_name</code> (VARCHAR(255) NOT NULL)</li>
-                        <li><code>description</code> (TEXT, NULL)</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td ><code>entry_subgroups</code></td>
-                <td >
-                    <ul>
-                        <li><code>id</code> (INT, AUTO_INCREMENT, PRIMARY KEY)</li>
-                        <li><code>group_id</code> (INT, FOREIGN KEY to <code>entry_groups</code>.<code>id</code>)</li>
-                        <li><code>subgroup_name</code> (VARCHAR(255) NOT NULL)</li>
-                        <li><code>description</code> (TEXT, NULL)</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td ><code>entries</code></td>
-                <td >
-                    <ul>
-                        <li><code>id</code> (INT, AUTO_INCREMENT, PRIMARY KEY)</li>
-                        <li><code>user_id</code> (INT, FOREIGN KEY to <code>users</code>.<code>id</code>)</li>
-                        <li><code>template_id</code> (INT, FOREIGN KEY to <code>templates</code>.<code>id</code>)</li>
-                        <li><code>entry_name</code> (VARCHAR(255) NOT NULL)</li>
-                        <li><code>creation_date</code> (DATETIME NOT NULL)</li>
-                        <li><code>expiration_date</code> (DATETIME)</li>
-                        <li><code>location_lat</code> (DECIMAL(10, 8) NOT NULL)</li>
-                        <li><code>location_lng</code> (DECIMAL(11, 8) NOT NULL)</li>
-                        <li><code>comment</code> (TEXT)</li>
-                        <li><code>var_description</code> (VARCHAR(255), NULL) – Description for the "VAR" category.  This field is only used when <code>template_id</code> refers to a VAR template.</li>
-                        <li><code>status</code> (VARCHAR(255) NOT NULL)</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td ><code>parameters</code></td>
-                <td >
-                    <ul>
-                        <li><code>id</code> (INT, AUTO_INCREMENT, PRIMARY KEY)</li>
-                        <li><code>name</code> (VARCHAR(255)) – parameter name (e.g., "Frequency", "Power", "Modulation", "Channel Width").</li>
-                        <li><code>data_type</code> (ENUM('text', 'integer', 'float', 'boolean', 'enum')) – data type (text, integer, floating-point number, boolean value, select list).</li>
-                        <li><code>default_value</code> (TEXT, NULL) – <em>optional</em> default parameter value.</li>
-                        <li><code>options</code> (TEXT, NULL) – <em>optional</em> list of allowed values (for the <code>enum</code> type), separated by commas, for example.</li>
-                        <li><code>template_id</code> (INT) - template id.</li>
-                        <li><code>sort_order</code> (INT) - parameter order.</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td ><code>entry_details</code></td>
-                <td >
-                    <ul>
-                        <li><code>id</code> (INT, AUTO_INCREMENT, PRIMARY KEY)</li>
-                        <li><code>entry_id</code> (INT, NULL, FOREIGN KEY to <code>entries</code>.<code>id</code>)</li>
-                        <li><code>subgroup_id</code> (INT, NULL, FOREIGN KEY to <code>entry_subgroups</code>.<code>id</code>)</li>
-                        <li><code>parameter_id</code> (INT, NULL, FOREIGN KEY to <code>parameters</code>.<code>id</code>) – reference to a <em>predefined</em> parameter (if it exists).</li>
-                        <li><code>custom_parameter_name</code> (VARCHAR(255), NULL) – name of a <em>custom</em> parameter (if <code>parameter_id</code> is NULL).</li>
-                        <li><code>value</code> (TEXT, NULL) – parameter value.</li>
-                        <li><code>is_option</code> (TINYINT, NULL) – flag indicating whether this is an "option" type parameter (yes/no). If NULL, it means it's a parameter with a value.</li>
-                    </ul>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<h1>Database Schema</h1>
+
+<p>This document outlines the database schema, including table structures and their respective columns.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Table Name</th>
+      <th>SQL Create Statement</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="tablename">users</span></td>
+      <td>
+        <div class="code">
+          <span class="comment">-- Create 'users' table</span><br>
+          <span class="keyword">CREATE TABLE IF NOT EXISTS</span> <span class="tablename">`users`</span> (<br>
+              `id` <span class="datatype">INT</span> <span class="keyword">AUTO_INCREMENT</span> <span class="keyword">PRIMARY KEY</span>,<br>
+              `username` <span class="datatype">VARCHAR</span>(255) <span class="keyword">NOT NULL UNIQUE</span>,<br>
+              `email` <span class="datatype">VARCHAR</span>(255) <span class="keyword">NOT NULL UNIQUE</span>,<br>
+              `password` <span class="datatype">VARCHAR</span>(255) <span class="keyword">NOT NULL</span>,<br>
+              `registration_date` <span class="datatype">DATETIME</span> <span class="keyword">NOT NULL</span>,<br>
+              `last_login_date` <span class="datatype">DATETIME</span> <span class="keyword">NULL</span> <span class="comment">-- Added for tracking last login</span><br>
+          ) <span class="keyword">ENGINE</span>=InnoDB;
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="tablename">templates</span></td>
+      <td>
+        <div class="code">
+<span class="comment">-- Create 'templates' table</span><br>
+<span class="keyword">CREATE TABLE IF NOT EXISTS</span> <span class="tablename">`templates`</span> (<br>
+    `id` <span class="datatype">INT</span> <span class="keyword">AUTO_INCREMENT</span> <span class="keyword">PRIMARY KEY</span>,<br>
+    `name` <span class="datatype">VARCHAR</span>(255),<br>
+    `description` <span class="datatype">TEXT</span>,<br>
+    `user_id` <span class="datatype">INT</span> <span class="keyword">NULL</span>, <span class="comment">-- NULL for "system" templates, otherwise the user ID</span><br>
+    `is_active` <span class="datatype">TINYINT</span> <span class="keyword">DEFAULT</span> 1, <span class="comment">-- For soft-deletion</span><br>
+    <span class="keyword">FOREIGN KEY</span> (`user_id`) <span class="keyword">REFERENCES</span> <span class="tablename">`users`</span>(`id`)<br>
+) <span class="keyword">ENGINE</span>=InnoDB;
+        </div>
+      </td>
+    </tr>
+    <tr>
+        <td><span class="tablename">callsigns</span></td>
+      <td>
+        <div class="code">
+<span class="comment">-- Create 'callsigns' table</span><br>
+<span class="keyword">CREATE TABLE IF NOT EXISTS</span> <span class="tablename">`callsigns`</span> (<br>
+    `id` <span class="datatype">INT</span> <span class="keyword">AUTO_INCREMENT</span> <span class="keyword">PRIMARY KEY</span>,<br>
+    `user_id` <span class="datatype">INT</span>,<br>
+    `callsign_id` <span class="datatype">VARCHAR</span>(255) <span class="keyword">UNIQUE</span>,<br>
+    <span class="keyword">FOREIGN KEY</span> (`user_id`) <span class="keyword">REFERENCES</span> <span class="tablename">`users`</span>(`id`)<br>
+) <span class="keyword">ENGINE</span>=InnoDB;
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="tablename">entry_groups</span></td>
+      <td>
+        <div class="code">
+          <span class="comment">-- Create 'entry_groups' table (No changes)</span><br>
+          <span class="keyword">CREATE TABLE IF NOT EXISTS</span> <span class="tablename">`entry_groups`</span> (<br>
+              `id` <span class="datatype">INT</span> <span class="keyword">AUTO_INCREMENT</span> <span class="keyword">PRIMARY KEY</span>,<br>
+              `user_id` <span class="datatype">INT</span>,<br>
+              `group_name` <span class="datatype">VARCHAR</span>(255) <span class="keyword">NOT NULL</span>,<br>
+              `description` <span class="datatype">TEXT</span> <span class="keyword">NULL</span>,<br>
+              <span class="keyword">FOREIGN KEY</span> (`user_id`) <span class="keyword">REFERENCES</span> <span class="tablename">`users`</span>(`id`)<br>
+          ) <span class="keyword">ENGINE</span>=InnoDB;
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="tablename">entry_subgroups</span></td>
+      <td>
+        <div class="code">
+          <span class="comment">-- Create 'entry_subgroups' table (No changes)</span><br>
+          <span class="keyword">CREATE TABLE IF NOT EXISTS</span> <span class="tablename">`entry_subgroups`</span> (<br>
+              `id` <span class="datatype">INT</span> <span class="keyword">AUTO_INCREMENT</span> <span class="keyword">PRIMARY KEY</span>,<br>
+              `group_id` <span class="datatype">INT</span>,<br>
+              `subgroup_name` <span class="datatype">VARCHAR</span>(255) <span class="keyword">NOT NULL</span>,<br>
+              `description` <span class="datatype">TEXT</span> <span class="keyword">NULL</span>,<br>
+              <span class="keyword">FOREIGN KEY</span> (`group_id`) <span class="keyword">REFERENCES</span> <span class="tablename">`entry_groups`</span>(`id`)<br>
+          ) <span class="keyword">ENGINE</span>=InnoDB;
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="tablename">entries</span></td>
+      <td>
+        <div class="code">
+          <span class="comment">-- Create 'entries' table (Modified)</span><br>
+            <span class="keyword">CREATE TABLE IF NOT EXISTS</span> <span class="tablename">`entries`</span> (<br>
+              `id` <span class="datatype">INT</span> <span class="keyword">AUTO_INCREMENT</span> <span class="keyword">PRIMARY KEY</span>,<br>
+              `user_id` <span class="datatype">INT</span>,<br>
+              `template_id` <span class="datatype">INT</span>,<br>
+              `entry_name` <span class="datatype">VARCHAR</span>(255) <span class="keyword">NOT NULL</span>,<br>
+              `creation_date` <span class="datatype">DATETIME</span> <span class="keyword">NOT NULL</span>,<br>
+              `expiration_date` <span class="datatype">DATETIME</span>,<br>
+              `location_lat` <span class="datatype">DECIMAL</span>(10, 8) <span class="keyword">NOT NULL</span>,<br>
+              `location_lng` <span class="datatype">DECIMAL</span>(11, 8) <span class="keyword">NOT NULL</span>,<br>
+              `comment` <span class="datatype">TEXT</span>,<br>
+              `description` <span class="datatype">VARCHAR</span>(255) <span class="keyword">NULL</span>,<br>
+            	`entry_type` <span class="datatype">ENUM</span>(<span class="string">'single'</span>, <span class="string">'multi'</span>) <span class="keyword">NOT NULL</span>, <span class="comment">-- Replaces is_system</span><br>
+              `parent_entry_id` <span class="datatype">INT</span> <span class="keyword">NULL</span>, <span class="comment">-- For hierarchical entries</span><br>
+          	 `is_active` <span class="datatype">TINYINT</span> <span class="keyword">DEFAULT</span> 1, <span class="comment">-- For soft-deletion</span><br>
+              `status` <span class="datatype">VARCHAR</span>(255) <span class="keyword">NOT NULL</span>,<br>
+              <span class="keyword">FOREIGN KEY</span> (`user_id`) <span class="keyword">REFERENCES</span> <span class="tablename">`users`</span>(`id`),<br>
+              <span class="keyword">FOREIGN KEY</span> (`template_id`) <span class="keyword">REFERENCES</span> <span class="tablename">`templates`</span>(`id`),<br>
+              <span class="keyword">FOREIGN KEY</span> (`parent_entry_id`) <span class="keyword">REFERENCES</span> <span class="tablename">`entries`</span>(`id`) <span class="comment">-- Self-referencing for hierarchy</span><br>
+          ) <span class="keyword">ENGINE</span>=InnoDB;
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="tablename">parameters</span></td>
+      <td>
+        <div class="code">
+          <span class="comment">-- Create 'parameters' table (No changes)</span><br>
+          <span class="keyword">CREATE TABLE IF NOT EXISTS</span> <span class="tablename">`parameters`</span> (<br>
+              `id` <span class="datatype">INT</span> <span class="keyword">AUTO_INCREMENT</span> <span class="keyword">PRIMARY KEY</span>,<br>
+              `name` <span class="datatype">VARCHAR</span>(255),<br>
+              `data_type` <span class="datatype">ENUM</span>(<span class="string">'text'</span>, <span class="string">'integer'</span>, <span class="string">'float'</span>, <span class="string">'boolean'</span>, <span class="string">'enum'</span>),<br>
+              `default_value` <span class="datatype">TEXT</span> <span class="keyword">NULL</span>,<br>
+              `options` <span class="datatype">TEXT</span> <span class="keyword">NULL</span>,<br>
+              `template_id` <span class="datatype">INT</span>,<br>
+              `sort_order` <span class="datatype">INT</span>,<br>
+              <span class="keyword">FOREIGN KEY</span> (`template_id`) <span class="keyword">REFERENCES</span> <span class="tablename">`templates`</span>(`id`)<br>
+          ) <span class="keyword">ENGINE</span>=InnoDB;
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="tablename">entry_details</span></td>
+      <td>
+        <div class="code">
+            <span class="comment">-- Create 'entry_details' table (No changes)</span><br>
+            <span class="keyword">CREATE TABLE IF NOT EXISTS</span> <span class="tablename">`entry_details`</span> (<br>
+                `id` <span class="datatype">INT</span> <span class="keyword">AUTO_INCREMENT</span> <span class="keyword">PRIMARY KEY</span>,<br>
+                `entry_id` <span class="datatype">INT</span> <span class="keyword">NULL</span>,<br>
+                `subgroup_id` <span class="datatype">INT</span> <span class="keyword">NULL</span>,<br>
+                `parameter_id` <span class="datatype">INT</span> <span class="keyword">NULL</span>,<br>
+                `custom_parameter_name` <span class="datatype">VARCHAR</span>(255) <span class="keyword">NULL</span>,<br>
+                `value` <span class="datatype">TEXT</span> <span class="keyword">NULL</span>,<br>
+                `is_option` <span class="datatype">TINYINT</span> <span class="keyword">NULL</span>,<br>
+                <span class="keyword">FOREIGN KEY</span> (`entry_id`) <span class="keyword">REFERENCES</span> <span class="tablename">`entries`</span>(`id`),<br>
+                <span class="keyword">FOREIGN KEY</span> (`subgroup_id`) <span class="keyword">REFERENCES</span> <span class="tablename">`entry_subgroups`</span>(`id`),<br>
+                <span class="keyword">FOREIGN KEY</span> (`parameter_id`) <span class="keyword">REFERENCES</span> <span class="tablename">`parameters`</span>(`id`)<br>
+            ) <span class="keyword">ENGINE</span>=InnoDB;
+        </div>
+      </td>
+    </tr>
+  	    <tr>
+      <td><span class="tablename">templates</span> - Initial Data</td>
+      <td>
+        <div class="code">
+          <span class="comment">-- Insert "system" template</span><br>
+          <span class="keyword">INSERT INTO</span> <span class="tablename">`templates`</span> (`name`, `description`, `user_id`, `is_active`) <span class="keyword">VALUES</span><br>
+          (<span class="string">'System'</span>, <span class="string">'System template'</span>, <span class="keyword">NULL</span>, 1);
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 </body>
 </html>

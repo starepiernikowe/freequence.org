@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo isset($view_data['page_title']) ? $view_data['page_title'] . ' - ' . SITE_NAME : SITE_NAME; ?></title>
-    <link rel="stylesheet" href="/public/css/style.css">  </head>
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="icon" href="/public/favicon.png" type="image/png"> </head>
 <body>
     <div class="container">
         <div class="top-bar">
-            <span class="site-title">freequence.org: Get on the Right Wavelength!</span>
+            <span class="site-title">Get on the Right Wavelength!</span>
             <div class="hamburger-menu">
                 <div></div>
                 <div></div>
@@ -36,5 +37,6 @@
         </div>
     </div>
 
-    <script src="/public/js/script.js"></script> </body>
+    <script src="/public/js/script.js"></script>
+</body>
 </html>
