@@ -1,7 +1,7 @@
 <?php
 require_once BASE_PATH . 'app/models/Entry.php';
 require_once BASE_PATH . 'app/models/Template.php';
-require_once BASE_PATH . 'app/models/EntryDetail.php'; // Add this line
+require_once BASE_PATH . 'app/models/EntryDetail.php';
 
 class EntryController {
 
@@ -18,7 +18,7 @@ class EntryController {
     }
 
     public function create($view_data = []) {
-        if (!isset($_SESSION['user_id'])) {
+         if (!isset($_SESSION['user_id'])) {
             redirect('login');
         }
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -81,7 +81,7 @@ class EntryController {
                 if ($newEntryId) {
                     // Handle dynamic parameters
                     if (isset($_POST['parameters']) && is_array($_POST['parameters'])) {
-                        $entryDetailModel = new EntryDetail(); // Instantiate EntryDetail model
+                        $entryDetailModel = new EntryDetail();
                         foreach ($_POST['parameters'] as $parameterId => $value) {
                             // Sanitize the value
                             $value = trim(htmlspecialchars($value));
@@ -98,7 +98,7 @@ class EntryController {
                                             'value' => $value,
                                             'is_option' => 0, // Assuming not an option for now
                                         ]);
-                                    } else {  // Log or handle invalid parameter ID (security)
+                                    } else {
                                         error_log("Invalid parameter ID: $parameterId");
                                     }
                             } else { //if parameter id doesn't exist, it will be custom.
@@ -130,5 +130,30 @@ class EntryController {
                 require_once BASE_PATH . 'app/views/entries/add.php';
             }
         }
+    }
+    public function view($view_data = []) {
+        // Authorization check
+        if (!isset($_SESSION['user_id'])) {
+            redirect('login');
+        }
+
+        // Get entry ID from the URL (query parameter)
+        $entryId = isset($_GET['id']) ? (int)$_GET['id'] : null;
+
+        if (!$entryId) {
+            // Handle missing or invalid entry ID (e.g., show an error, redirect)
+            echo "Invalid entry ID."; // Replace with a proper error message/redirection
+            exit;
+        }
+
+        $entryModel = new Entry();
+        $entry = $entryModel->getEntryById($entryId);
+        //If entry do not exist, or do not belong to user, exit.
+        if (!$entry || $entry['user_id'] !== $_SESSION['user_id']) {
+             echo "Entry not found or access denied.";
+             exit;
+        }
+        $view_data['entry'] = $entry;
+        require_once BASE_PATH . 'app/views/entries/view.php';
     }
 }

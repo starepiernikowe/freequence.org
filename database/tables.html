@@ -51,8 +51,8 @@
 <table>
   <thead>
     <tr>
-      <th>Table Name</th>
-      <th>SQL Create Statement</th>
+      <th>Table Name / Action</th>
+      <th>SQL Statement</th>
     </tr>
   </thead>
   <tbody>
@@ -67,7 +67,7 @@
               `email` <span class="datatype">VARCHAR</span>(255) <span class="keyword">NOT NULL UNIQUE</span>,<br>
               `password` <span class="datatype">VARCHAR</span>(255) <span class="keyword">NOT NULL</span>,<br>
               `registration_date` <span class="datatype">DATETIME</span> <span class="keyword">NOT NULL</span>,<br>
-              `last_login_date` <span class="datatype">DATETIME</span> <span class="keyword">NULL</span> <span class="comment">-- Added for tracking last login</span><br>
+              `last_login_date` <span class="datatype">DATETIME</span> <span class="keyword">NULL</span><br>
           ) <span class="keyword">ENGINE</span>=InnoDB;
         </div>
       </td>
@@ -81,8 +81,8 @@
     `id` <span class="datatype">INT</span> <span class="keyword">AUTO_INCREMENT</span> <span class="keyword">PRIMARY KEY</span>,<br>
     `name` <span class="datatype">VARCHAR</span>(255),<br>
     `description` <span class="datatype">TEXT</span>,<br>
-    `user_id` <span class="datatype">INT</span> <span class="keyword">NULL</span>, <span class="comment">-- NULL for "system" templates, otherwise the user ID</span><br>
-    `is_active` <span class="datatype">TINYINT</span> <span class="keyword">DEFAULT</span> 1, <span class="comment">-- For soft-deletion</span><br>
+    `user_id` <span class="datatype">INT</span> <span class="keyword">NULL</span>,<br>
+    `is_active` <span class="datatype">TINYINT</span> <span class="keyword">DEFAULT</span> 1,<br>
     <span class="keyword">FOREIGN KEY</span> (`user_id`) <span class="keyword">REFERENCES</span> <span class="tablename">`users`</span>(`id`)<br>
 ) <span class="keyword">ENGINE</span>=InnoDB;
         </div>
@@ -106,7 +106,7 @@
       <td><span class="tablename">entry_groups</span></td>
       <td>
         <div class="code">
-          <span class="comment">-- Create 'entry_groups' table (No changes)</span><br>
+          <span class="comment">-- Create 'entry_groups' table (Currently unused)</span><br>
           <span class="keyword">CREATE TABLE IF NOT EXISTS</span> <span class="tablename">`entry_groups`</span> (<br>
               `id` <span class="datatype">INT</span> <span class="keyword">AUTO_INCREMENT</span> <span class="keyword">PRIMARY KEY</span>,<br>
               `user_id` <span class="datatype">INT</span>,<br>
@@ -121,7 +121,7 @@
       <td><span class="tablename">entry_subgroups</span></td>
       <td>
         <div class="code">
-          <span class="comment">-- Create 'entry_subgroups' table (No changes)</span><br>
+          <span class="comment">-- Create 'entry_subgroups' table (Currently unused)</span><br>
           <span class="keyword">CREATE TABLE IF NOT EXISTS</span> <span class="tablename">`entry_subgroups`</span> (<br>
               `id` <span class="datatype">INT</span> <span class="keyword">AUTO_INCREMENT</span> <span class="keyword">PRIMARY KEY</span>,<br>
               `group_id` <span class="datatype">INT</span>,<br>
@@ -136,7 +136,7 @@
       <td><span class="tablename">entries</span></td>
       <td>
         <div class="code">
-          <span class="comment">-- Create 'entries' table (Modified)</span><br>
+          <span class="comment">-- Create 'entries' table</span><br>
             <span class="keyword">CREATE TABLE IF NOT EXISTS</span> <span class="tablename">`entries`</span> (<br>
               `id` <span class="datatype">INT</span> <span class="keyword">AUTO_INCREMENT</span> <span class="keyword">PRIMARY KEY</span>,<br>
               `user_id` <span class="datatype">INT</span>,<br>
@@ -148,13 +148,13 @@
               `location_lng` <span class="datatype">DECIMAL</span>(11, 8) <span class="keyword">NOT NULL</span>,<br>
               `comment` <span class="datatype">TEXT</span>,<br>
               `description` <span class="datatype">VARCHAR</span>(255) <span class="keyword">NULL</span>,<br>
-            	`entry_type` <span class="datatype">ENUM</span>(<span class="string">'single'</span>, <span class="string">'multi'</span>) <span class="keyword">NOT NULL</span>, <span class="comment">-- Replaces is_system</span><br>
-              `parent_entry_id` <span class="datatype">INT</span> <span class="keyword">NULL</span>, <span class="comment">-- For hierarchical entries</span><br>
-          	 `is_active` <span class="datatype">TINYINT</span> <span class="keyword">DEFAULT</span> 1, <span class="comment">-- For soft-deletion</span><br>
+              `entry_type` <span class="datatype">ENUM</span>(<span class="string">'single'</span>, <span class="string">'multi'</span>) <span class="keyword">NOT NULL</span>,<br>
+              `parent_entry_id` <span class="datatype">INT</span> <span class="keyword">NULL</span>,<br>
+              `is_active` <span class="datatype">TINYINT</span> <span class="keyword">DEFAULT</span> 1,<br>
               `status` <span class="datatype">VARCHAR</span>(255) <span class="keyword">NOT NULL</span>,<br>
               <span class="keyword">FOREIGN KEY</span> (`user_id`) <span class="keyword">REFERENCES</span> <span class="tablename">`users`</span>(`id`),<br>
               <span class="keyword">FOREIGN KEY</span> (`template_id`) <span class="keyword">REFERENCES</span> <span class="tablename">`templates`</span>(`id`),<br>
-              <span class="keyword">FOREIGN KEY</span> (`parent_entry_id`) <span class="keyword">REFERENCES</span> <span class="tablename">`entries`</span>(`id`) <span class="comment">-- Self-referencing for hierarchy</span><br>
+              <span class="keyword">FOREIGN KEY</span> (`parent_entry_id`) <span class="keyword">REFERENCES</span> <span class="tablename">`entries`</span>(`id`)<br>
           ) <span class="keyword">ENGINE</span>=InnoDB;
         </div>
       </td>
@@ -163,7 +163,7 @@
       <td><span class="tablename">parameters</span></td>
       <td>
         <div class="code">
-          <span class="comment">-- Create 'parameters' table (No changes)</span><br>
+          <span class="comment">-- Create 'parameters' table</span><br>
           <span class="keyword">CREATE TABLE IF NOT EXISTS</span> <span class="tablename">`parameters`</span> (<br>
               `id` <span class="datatype">INT</span> <span class="keyword">AUTO_INCREMENT</span> <span class="keyword">PRIMARY KEY</span>,<br>
               `name` <span class="datatype">VARCHAR</span>(255),<br>
@@ -181,7 +181,7 @@
       <td><span class="tablename">entry_details</span></td>
       <td>
         <div class="code">
-            <span class="comment">-- Create 'entry_details' table (No changes)</span><br>
+            <span class="comment">-- Create 'entry_details' table</span><br>
             <span class="keyword">CREATE TABLE IF NOT EXISTS</span> <span class="tablename">`entry_details`</span> (<br>
                 `id` <span class="datatype">INT</span> <span class="keyword">AUTO_INCREMENT</span> <span class="keyword">PRIMARY KEY</span>,<br>
                 `entry_id` <span class="datatype">INT</span> <span class="keyword">NULL</span>,<br>
@@ -203,7 +203,30 @@
         <div class="code">
           <span class="comment">-- Insert "system" template</span><br>
           <span class="keyword">INSERT INTO</span> <span class="tablename">`templates`</span> (`name`, `description`, `user_id`, `is_active`) <span class="keyword">VALUES</span><br>
-          (<span class="string">'System'</span>, <span class="string">'System template'</span>, <span class="keyword">NULL</span>, 1);
+          (<span class="string">'System'</span>, <span class="string">'System template'</span>, <span class="keyword">NULL</span>, 1);<br>
+          <br>
+          <span class="comment">-- Insert "system" templates (DMR446, PMR446)</span><br>
+            <span class="keyword">INSERT INTO</span> <span class="tablename">`templates`</span> (`name`, `description`, `user_id`, `is_active`) <span class="keyword">VALUES</span><br>
+            (<span class="string">'DMR446'</span>, <span class="string">'Digital Mobile Radio 446 MHz'</span>, <span class="keyword">NULL</span>, 1),<br>
+            (<span class="string">'PMR446'</span>, <span class="string">'Private Mobile Radio 446 MHz'</span>, <span class="keyword">NULL</span>, 1);
+        </div>
+      </td>
+    </tr>
+        <tr>
+      <td><span class="tablename">parameters</span> - Initial Data</td>
+      <td>
+        <div class="code">
+            <span class="comment">-- Insert parameters for DMR446 (template_id = 2)</span><br>
+            <span class="keyword">INSERT INTO</span> <span  class="tablename">`parameters`</span> (`name`, `data_type`, `default_value`, `options`, `template_id`, `sort_order`) <span class="keyword">VALUES</span><br>
+            (<span class="string">'Channel'</span>, <span class="string">'float'</span>, <span class="string">''</span>, <span class="keyword">NULL</span>, 2, 1),<br>
+            (<span class="string">'Talkgroup'</span>, <span class="string">'text'</span>, <span class="string">''</span>, <span class="keyword">NULL</span>, 2, 2),<br>
+            (<span class="string">'Color Code'</span>, <span class="string">'integer'</span>, <span class="string">''</span>, <span class="keyword">NULL</span>, 2, 3),<br>
+            (<span class="string">'Timeslot'</span>, <span class="string">'integer'</span>, <span class="string">''</span>, <span class="keyword">NULL</span>, 2, 4);<br><br>
+
+            <span class="comment">-- Insert parameters for PMR446 (template_id = 3)</span><br>
+            <span class="keyword">INSERT INTO</span> <span  class="tablename">`parameters`</span> (`name`, `data_type`, `default_value`, `options`, `template_id`, `sort_order`) <span class="keyword">VALUES</span><br>
+            (<span class="string">'Channel'</span>, <span class="string">'integer'</span>, <span class="string">''</span>, <span class="keyword">NULL</span>, 3, 1),<br>
+            (<span class="string">'CTCSS / DCS'</span>, <span class="string">'text'</span>, <span class="string">''</span>, <span class="keyword">NULL</span>, 3, 2);
         </div>
       </td>
     </tr>

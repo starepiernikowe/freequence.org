@@ -26,8 +26,9 @@ $routes = [
     'logout' => ['controller' => 'LoginController', 'method' => 'logout', 'auth' => true, 'title' => 'Logout'],
     'home' => ['controller' => 'HomeController', 'method' => 'index', 'auth' => true, 'title' => 'Home'],
     'add_entry' => ['controller' => 'EntryController', 'method' => 'add', 'auth' => true, 'title' => 'Add Entry'],
-    'entry/create' => ['controller' => 'EntryController', 'method' => 'create', 'auth' => true, 'title' => 'Add Entry'], // For form submission
+    'entry/create' => ['controller' => 'EntryController', 'method' => 'create', 'auth' => true, 'title' => 'Add Entry'],
     'templates/parameters' => ['controller' => 'TemplateController', 'method' => 'getParameters', 'auth' => true, 'title' => 'Get Template Parameters'],
+    'entry/view' => ['controller' => 'EntryController', 'method' => 'view', 'auth' => true, 'title' => 'View Entry'], // Add this line
 ];
 
 // Route handling
